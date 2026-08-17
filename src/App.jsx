@@ -227,7 +227,10 @@ export default function App() {
       <footer className="footer">
         <p>{config.couple.firstName} <span>&</span> {config.couple.secondName}</p>
         <small>Made with care for the people who matter most.</small>
-        <a href={config.craftedBy.href}>Crafted by {config.craftedBy.name} <ChevronRight size={13} /></a>
+        <small className="footer-credit">Crafted by <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
+        <nav className="footer-links" aria-label="Creator links">
+          {config.craftedBy.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ChevronRight size={13} aria-hidden="true" /></a>)}
+        </nav>
       </footer>
     </div>
     </MotionConfig>

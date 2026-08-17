@@ -81,7 +81,10 @@ export const weddingConfig = {
     enabled: false, src: '', label: 'A little music for the journey',
   },
   craftedBy: {
-    name: 'Viquantra', href: 'mailto:hello@viquantra.com?subject=Wedding%20website%20enquiry',
+    name: 'Muralee G', role: 'Founder, Viquantra Labs', links: [
+      { label: 'muralee.co.in', href: 'https://muralee.co.in/' },
+      { label: 'viquantra.com', href: 'https://viquantra.com/' },
+    ],
   },
   postWedding: {
     eyebrow: 'With grateful hearts',

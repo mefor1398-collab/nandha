@@ -228,7 +228,12 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 .footer p { margin: 0; color: #fffaf4; font-family: 'Playfair Display', serif; font-size: 23px; }
 .footer p span { color: var(--rose-pale); font-style: italic; }
 .footer small { font-size: 10px; }
-.footer a { display: inline-flex; align-items: center; gap: 1px; margin-top: 9px; color: var(--rose-pale); font-size: 10px; text-decoration: none; }
+.footer-credit { color: #d8e5df; }
+.footer-credit strong { color: #fffaf4; font-weight: 700; }
+.footer-credit span { color: var(--rose-pale); }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; margin-top: 4px; }
+.footer-links a { display: inline-flex; align-items: center; gap: 1px; color: var(--rose-pale); font-size: 10px; text-decoration: none; }
+.footer-links a:hover, .footer-links a:focus-visible { color: #fffaf4; }
 
 @keyframes petal-drift { 0% { transform: translate3d(0, -20px, 0) rotate(0deg); } 100% { transform: translate3d(60px, 112vh, 0) rotate(340deg); } }
 @keyframes hero-breathe { from { transform: scale(1); } to { transform: scale(1.035); } }
