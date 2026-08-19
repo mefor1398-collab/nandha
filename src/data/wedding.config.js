@@ -9,7 +9,6 @@ export const weddingConfig = {
   couple: {
     firstName: 'Nandha Kishore',
     secondName: 'Vani',
-    blessing: 'Sri Muneeshwaran Thunai',
     date: '2026-08-31T04:00:00+05:30',
     invitationLine: 'With the blessings of their families, invite you to celebrate the sacred beginning of their life together.',
     location: 'Kumpinipet, Arakkonam',
@@ -21,6 +20,7 @@ export const weddingConfig = {
   },
   assets: {
     hero: '/media/couple-promise.jpg',
+    vinayagar: '/media/vinayagar.png',
     heroPosition: 'center 22%',
     gallery: [
       { src: '/media/couple-promise.jpg', alt: 'The couple sharing a quiet promise beneath a flower arch.', position: 'center 22%' },

@@ -98,20 +98,28 @@ export default function App() {
           <MusicToggle music={config.music} />
         </header>
         <div className="hero__content container">
-          <motion.p className="hero__eyebrow" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.65 }}>
-            {isPostWedding ? config.postWedding.eyebrow : config.couple.blessing}
-          </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}>
-            {isPostWedding ? config.postWedding.title : <><span>{config.couple.firstName}</span><em>&</em><span>{config.couple.secondName}</span></>}
-          </motion.h1>
-          <motion.p className="hero__line" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.8 }}>
-            {isPostWedding ? config.postWedding.copy : config.couple.invitationLine}
-          </motion.p>
-          {!isPostWedding && <motion.div className="hero__date" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.78, duration: 0.7 }}><span>{formatHeroDate(config.couple.date)}</span><i /> <span>{config.couple.location}</span></motion.div>}
-          {!isPostWedding && <motion.div className="hero__countdown" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.75 }}><Countdown date={config.couple.date} /></motion.div>}
-          <motion.button className="begin-button" type="button" onClick={() => scrollToId(isPostWedding ? 'gallery' : 'story')} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 0.75 }}>
-            {isPostWedding ? 'Revisit the moments' : 'Begin the celebration'} <ArrowDown size={16} aria-hidden="true" />
-          </motion.button>
+          <div className="hero__identity">
+            {isPostWedding ? (
+              <motion.p className="hero__eyebrow" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.65 }}>
+                {config.postWedding.eyebrow}
+              </motion.p>
+            ) : (
+              <motion.img className="vinayagar" src={config.assets.vinayagar} alt="Vinayagar" initial={{ opacity: 0, scale: 0.84 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.12, duration: 0.6 }} />
+            )}
+            <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}>
+              {isPostWedding ? config.postWedding.title : <><span>{config.couple.firstName}</span><em>&</em><span>{config.couple.secondName}</span></>}
+            </motion.h1>
+          </div>
+          <div className="hero__details">
+            <motion.p className="hero__line" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.8 }}>
+              {isPostWedding ? config.postWedding.copy : config.couple.invitationLine}
+            </motion.p>
+            {!isPostWedding && <motion.div className="hero__date" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.78, duration: 0.7 }}><span>{formatHeroDate(config.couple.date)}</span><i /> <span>{config.couple.location}</span></motion.div>}
+            {!isPostWedding && <motion.div className="hero__countdown" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.75 }}><Countdown date={config.couple.date} /></motion.div>}
+            <motion.button className="begin-button" type="button" onClick={() => scrollToId(isPostWedding ? 'gallery' : 'story')} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 0.75 }}>
+              {isPostWedding ? 'Revisit the moments' : 'Begin the celebration'} <ArrowDown size={16} aria-hidden="true" />
+            </motion.button>
+          </div>
         </div>
         <p className="hero__date-status">{dateStatus === 'today' && !isPostWedding ? 'Today is the day' : ''}</p>
       </section>
