@@ -29,6 +29,7 @@ export const weddingConfig = {
       { src: '/media/groom-portrait.jpeg', alt: 'A black-and-white portrait of the groom.', position: 'center 21%' },
       { src: '/media/couple-rings.jpg', alt: 'The couple admiring their rings together.', position: 'center 21%' },
       { src: '/media/couple-gaze.jpeg', alt: 'A graceful portrait of the bride and groom in traditional attire.', position: 'center 59%' },
+      { src: '/media/couple-embrace-bw.jpg', alt: 'A tender black-and-white portrait of the bride and groom together.', position: 'center 25%' },
     ],
   },
   navigation: [
