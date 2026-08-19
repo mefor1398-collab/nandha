@@ -25,6 +25,8 @@ function formatHeroDate(date) {
 export default function App() {
   const config = weddingConfig;
   const prefersReducedMotion = useReducedMotion();
+  const [groomFirstName, ...groomLastNameParts] = config.couple.firstName.split(' ');
+  const groomLastName = groomLastNameParts.join(' ');
   const [progress, setProgress] = useState(0);
   const [shared, setShared] = useState(false);
   const events = useMemo(() => config.celebrations.filter((event) => event.enabled), [config.celebrations]);
@@ -107,7 +109,7 @@ export default function App() {
               <motion.img className="vinayagar" src={config.assets.vinayagar} alt="Vinayagar" initial={{ opacity: 0, scale: 0.84 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.12, duration: 0.6 }} />
             )}
             <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}>
-              {isPostWedding ? config.postWedding.title : <><span>{config.couple.firstName}</span><em>&</em><span>{config.couple.secondName}</span></>}
+              {isPostWedding ? config.postWedding.title : <><span className="hero__groom-name"><span className="hero__groom-first">{groomFirstName}</span><span className="hero__groom-last">{groomLastName}</span></span><em>&</em><span className="hero__bride-name">{config.couple.secondName}</span></>}
             </motion.h1>
           </div>
           <div className="hero__details">
