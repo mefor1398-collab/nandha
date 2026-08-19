@@ -165,11 +165,11 @@ export default function App() {
               <div className="container">
                 <SectionHeading eyebrow="A place to gather" title="By the sea, with everyone we love." copy={config.venue.arrivalNote} />
                 <div className="venue-grid">
-                  <div className="venue-map">
+                  <motion.div className="venue-map" initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.78, ease: [0.2, 0.7, 0.2, 1] }}>
                     <iframe title={'Map to ' + config.venue.name} loading="lazy" src={'https://www.google.com/maps?q=' + encodeURIComponent(config.venue.address) + '&output=embed'} />
                     <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer" className="map-cta"><Navigation size={16} /> Open directions</a>
-                  </div>
-                  <div className="venue-details">
+                  </motion.div>
+                  <motion.div className="venue-details" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.78, delay: 0.08, ease: [0.2, 0.7, 0.2, 1] }}>
                     <p className="eyebrow">The venue</p>
                     <h3>{config.venue.name}</h3>
                     <address>{config.venue.address}</address>
@@ -182,12 +182,12 @@ export default function App() {
                       <li><Heart size={17} aria-hidden="true" /><span><strong>Stay nearby</strong>{config.venue.accommodation}</span></li>
                       <li><Navigation size={17} aria-hidden="true" /><span><strong>Getting there</strong>{config.venue.transport}</span></li>
                     </ul>
-                  </div>
+                  </motion.div>
                 </div>
-                <div className="faq-wrap">
+                <motion.div className="faq-wrap" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} transition={{ duration: 0.75, ease: [0.2, 0.7, 0.2, 1] }}>
                   <div><p className="eyebrow">A few helpful notes</p><h3>Everything you may be wondering.</h3><p>For anything else, please contact the family directly.</p>{config.venue.organiserPhone && <a href={'tel:' + config.venue.organiserPhone} className="text-button"><Phone size={15} /> Call the organiser</a>}</div>
                   <Accordion items={config.faq} />
-                </div>
+                </motion.div>
               </div>
             </section>
 
@@ -218,9 +218,9 @@ export default function App() {
           <div className="container">
             <SectionHeading light eyebrow="Family & blessings" title="Rooted in love, surrounded by grace." />
             <div className="family-grid">
-              {[config.family.bride, config.family.groom].map((family) => <article className="family-card" key={family.relation}><p>{family.heading}</p><h3>{family.relation}</h3>{family.names.map((name) => <span key={name}>{name}</span>)}</article>)}
+              {[config.family.bride, config.family.groom].map((family, index) => <motion.article className="family-card" key={family.relation} initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }} viewport={{ once: true, amount: 0.28 }} transition={{ duration: 0.68, delay: index * 0.1, ease: [0.2, 0.7, 0.2, 1] }}><p>{family.heading}</p><h3>{family.relation}</h3>{family.names.map((name) => <span key={name}>{name}</span>)}</motion.article>)}
             </div>
-            <blockquote className="blessing-quote"><p>{config.family.quote.english}</p><span>{config.family.quote.native}</span><cite>{config.family.quote.attribution}</cite></blockquote>
+            <motion.blockquote className="blessing-quote" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.78, ease: [0.2, 0.7, 0.2, 1] }}><p>{config.family.quote.english}</p><span>{config.family.quote.native}</span><cite>{config.family.quote.attribution}</cite></motion.blockquote>
             <BlessingPicker />
           </div>
         </section>
@@ -228,26 +228,26 @@ export default function App() {
         {config.guestbook.enabled && (
           <section className="guestbook section section--sand" id="wishes">
             <div className="container guestbook-layout">
-              <div><p className="eyebrow">A place for your blessings</p><h2>Send a wish they will treasure.</h2><p>Share a blessing, a memory, or a few words for the beautiful journey Nandha Kishore and Vani are beginning together.</p><div className="hashtag"><Share2 size={15} /><span>{config.guestbook.hashtag}</span><button type="button" onClick={shareInvitation}>{shared ? 'Link copied' : 'Share invitation'}</button></div></div>
+              <motion.div initial={{ opacity: 0, x: -26 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.72, ease: [0.2, 0.7, 0.2, 1] }}><p className="eyebrow">A place for your blessings</p><h2>Send a wish they will treasure.</h2><p>Share a blessing, a memory, or a few words for the beautiful journey Nandha Kishore and Vani are beginning together.</p><div className="hashtag"><Share2 size={15} /><span>{config.guestbook.hashtag}</span><button type="button" onClick={shareInvitation}>{shared ? 'Link copied' : 'Share invitation'}</button></div></motion.div>
               <Guestbook hashtag={config.guestbook.hashtag} />
             </div>
           </section>
         )}
       </main>
 
-      <div className="floating-actions" aria-label="Quick actions">
+      <motion.div className="floating-actions" aria-label="Quick actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.25, duration: 0.6 }}>
         {!isPostWedding && config.rsvp.enabled && <button type="button" onClick={() => scrollToId('rsvp')}><Heart size={17} /> <span>RSVP</span></button>}
         {!isPostWedding && <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={17} /> <span>Directions</span></a>}
-      </div>
+      </motion.div>
 
-      <footer className="footer">
+      <motion.footer className="footer" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}>
         <p>{config.couple.firstName} <span>&</span> {config.couple.secondName}</p>
         <small>Made with care for the people who matter most.</small>
         <small className="footer-credit">Crafted by <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
         <nav className="footer-links" aria-label="Creator links">
           {config.craftedBy.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ChevronRight size={13} aria-hidden="true" /></a>)}
         </nav>
-      </footer>
+      </motion.footer>
     </div>
     </MotionConfig>
   );

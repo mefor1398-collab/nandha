@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const blessings = {
   Love: 'May your home always be the softest place to land.',
@@ -10,7 +11,7 @@ const blessings = {
 export default function BlessingPicker() {
   const [selected, setSelected] = useState('');
   return (
-    <div className="blessing-picker">
+    <motion.div className="blessing-picker" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}>
       <p className="eyebrow">Leave a quiet blessing</p>
       <div className="blessing-picker__options">
         {Object.keys(blessings).map((blessing) => (
@@ -18,6 +19,6 @@ export default function BlessingPicker() {
         ))}
       </div>
       <p className="blessing-picker__message" aria-live="polite">{selected ? blessings[selected] : 'Choose a word for the journey ahead.'}</p>
-    </div>
+    </motion.div>
   );
 }

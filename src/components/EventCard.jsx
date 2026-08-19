@@ -1,9 +1,18 @@
 import { CalendarPlus, Clock3, MapPin, Navigation } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { calendarUrl } from '../utils';
 
 export default function EventCard({ event, couple, index }) {
   return (
-    <article className="event-card">
+    <motion.article
+      className="event-card"
+      initial={{ opacity: 0, y: 34, scale: 0.985 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.995 }}
+      viewport={{ once: true, amount: 0.22 }}
+      transition={{ duration: 0.75, delay: index * 0.12, ease: [0.2, 0.7, 0.2, 1] }}
+    >
       <span className="event-card__index">0{index + 1}</span>
       <div className="event-card__topline">
         <p>{event.date}</p>
@@ -19,6 +28,6 @@ export default function EventCard({ event, couple, index }) {
         <a href={calendarUrl(event, couple)} target="_blank" rel="noreferrer"><CalendarPlus size={15} aria-hidden="true" /> Add to calendar</a>
         <a href={event.mapsUrl} target="_blank" rel="noreferrer"><Navigation size={15} aria-hidden="true" /> Directions</a>
       </div>
-    </article>
+    </motion.article>
   );
 }
