@@ -87,8 +87,8 @@ export const weddingConfig = {
     ],
   },
   postWedding: {
-    eyebrow: 'With grateful hearts',
-    title: 'Thank you for being part of our beginning.',
-    copy: 'Your presence, blessings, and joy made every frame of this celebration more meaningful.',
+    eyebrow: 'With warmest wishes',
+    title: 'Happy Married Life, Nandha Kishore & Vani.',
+    copy: 'May your life together be filled with love, laughter, and beautiful memories.',
   },
 };

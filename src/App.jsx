@@ -25,13 +25,19 @@ function formatHeroDate(date) {
 export default function App() {
   const config = weddingConfig;
   const prefersReducedMotion = useReducedMotion();
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
   const [groomFirstName, ...groomLastNameParts] = config.couple.firstName.split(' ');
   const groomLastName = groomLastNameParts.join(' ');
   const [progress, setProgress] = useState(0);
   const [shared, setShared] = useState(false);
   const events = useMemo(() => config.celebrations.filter((event) => event.enabled), [config.celebrations]);
-  const isPostWedding = config.mode === 'postWedding';
+  const isPostWedding = config.mode === 'postWedding' || currentTime >= new Date(config.couple.date).getTime();
   const dateStatus = weddingMoment(config.couple.date);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setCurrentTime(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     document.title = config.couple.firstName + ' & ' + config.couple.secondName + ' — The Celebration';
