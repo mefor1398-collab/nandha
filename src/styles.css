@@ -68,7 +68,7 @@ img { max-width: 100%; }
 .begin-button svg { transition: transform .2s; }
 .begin-button:hover svg { transform: translateY(3px); }
 .hero__date-status { position: absolute; bottom: 20px; right: 20px; color: rgba(255,255,255,.7); font-size: 10px; letter-spacing: .08em; }
-.hero__petals { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.hero__petals { position: absolute; inset: 0; overflow: hidden; z-index: 1; pointer-events: none; }
 .petal { position: absolute; top: -8%; left: calc((var(--petal-index) * 8) * 1%); width: 8px; height: 13px; opacity: .55; border-radius: 80% 0 80% 0; background: #f2d2cb; animation: petal-drift calc(11s + var(--petal-index) * .7s) linear infinite; animation-delay: calc(var(--petal-index) * -1.2s); }
 .petal--1 { background: #ecd7c1; } .petal--2 { width: 5px; height: 9px; opacity: .32; } .petal--3 { background: #f9e5e4; } .petal--4 { opacity: .2; }
 
