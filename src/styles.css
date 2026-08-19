@@ -257,7 +257,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
   .hero__content { position: static; order: initial; flex: none; display: block; padding: 0; }
   .hero__identity { position: absolute; z-index: 2; top: max(22px, calc(env(safe-area-inset-top) + 10px)); left: 68px; right: 12px; text-align: left; }
   .vinayagar { position: absolute; top: 2px; right: 0; width: 25px; height: 25px; margin: 0; }
-  .hero h1 { max-width: 282px; display: flex; flex-wrap: wrap; align-items: baseline; margin: 0; font-size: clamp(40px, 11.1vw, 45px); font-weight: 600; letter-spacing: -.085em; line-height: .77; text-shadow: 0 2px 16px rgba(7, 32, 23, .56); }
+  .hero h1 { max-width: 282px; display: flex; flex-wrap: wrap; align-items: baseline; margin: 0; font-size: clamp(42px, 11.8vw, 48px); font-weight: 600; letter-spacing: -.085em; line-height: .77; text-shadow: 0 2px 16px rgba(7, 32, 23, .56); }
   .hero h1 span { white-space: normal; }
   .hero h1 .hero__groom-name { display: contents; }
   .hero h1 .hero__groom-first { order: 1; display: inline-block; font-weight: 600; }
