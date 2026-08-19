@@ -17,6 +17,13 @@ import BlessingPicker from './components/BlessingPicker';
 import MusicToggle from './components/MusicToggle';
 
 const petals = Array.from({ length: 13 }, (_, index) => index);
+const fireworkBursts = [
+  { x: '18%', y: '24%', delay: '0s', color: '#f2d39a' },
+  { x: '79%', y: '20%', delay: '.65s', color: '#e8b8c2' },
+  { x: '48%', y: '38%', delay: '1.3s', color: '#fff4e5' },
+  { x: '87%', y: '48%', delay: '1.95s', color: '#a5d6c5' },
+  { x: '12%', y: '53%', delay: '2.6s', color: '#efa98e' },
+];
 
 function formatHeroDate(date) {
   return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
@@ -96,6 +103,17 @@ export default function App() {
             <i className={'petal petal--' + (petal % 5)} style={{ '--petal-index': petal }} key={petal} />
           ))}
         </div>
+        {isPostWedding && (
+          <div className="fireworks" aria-hidden="true">
+            {fireworkBursts.map((burst, burstIndex) => (
+              <span className="firework" key={burstIndex} style={{ '--x': burst.x, '--y': burst.y, '--delay': burst.delay, '--firework-color': burst.color }}>
+                {Array.from({ length: 12 }, (_, sparkIndex) => (
+                  <i key={sparkIndex} style={{ '--angle': sparkIndex * 30 + 'deg', '--distance': 66 + (sparkIndex % 3) * 12 + 'px', '--distance-far': 81 + (sparkIndex % 3) * 15 + 'px', '--spark-delay': (sparkIndex % 2) * 0.035 + 's' }} />
+                ))}
+              </span>
+            ))}
+          </div>
+        )}
         <header className="hero__nav container">
           <button className="wordmark" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top">
             <span>{config.couple.firstName.charAt(0) + config.couple.secondName.charAt(0)}</span>
