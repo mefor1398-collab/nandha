@@ -82,7 +82,7 @@ export const weddingConfig = {
     enabled: false, src: '', label: 'A little music for the journey',
   },
   craftedBy: {
-    name: 'Muralee G', role: 'Founder, Viquantra Labs', links: [
+    name: 'Muralee G', role: 'Founder, Viquantra Labs', whatsappPhone: '919940800470', links: [
       { label: 'muralee.co.in', href: 'https://muralee.co.in/' },
       { label: 'viquantra.com', href: 'https://viquantra.com/' },
     ],

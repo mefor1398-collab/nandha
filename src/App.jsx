@@ -40,6 +40,7 @@ export default function App() {
   const events = useMemo(() => config.celebrations.filter((event) => event.enabled), [config.celebrations]);
   const isPostWedding = config.mode === 'postWedding' || currentTime >= new Date(config.couple.date).getTime();
   const dateStatus = weddingMoment(config.couple.date);
+  const creatorWhatsAppUrl = 'https://wa.me/' + config.craftedBy.whatsappPhone + '?text=' + encodeURIComponent('Hello Muralee, I discovered the Nandha & Vani invitation and would love to create a beautiful digital invitation for my celebration.');
 
   useEffect(() => {
     const timer = window.setInterval(() => setCurrentTime(Date.now()), 1000);
@@ -261,6 +262,12 @@ export default function App() {
       <motion.footer className="footer" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}>
         <p>{config.couple.firstName} <span>&</span> {config.couple.secondName}</p>
         <small>Made with care for the people who matter most.</small>
+        <div className="footer-promo">
+          <span className="footer-promo__eyebrow">Your story deserves its own beautiful beginning</span>
+          <strong>Planning a celebration?</strong>
+          <p>Turn your special occasion into an elegant digital experience your guests will remember.</p>
+          <a href={creatorWhatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} aria-hidden="true" /> Create your invitation</a>
+        </div>
         <small className="footer-credit">Crafted by <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
         <nav className="footer-links" aria-label="Creator links">
           {config.craftedBy.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ChevronRight size={13} aria-hidden="true" /></a>)}
