@@ -30,3 +30,19 @@ export function weddingMoment(date) {
   if (now > target) return 'after';
   return 'before';
 }
+
+export function weddingStage(config, now = Date.now()) {
+  if (config.mode === 'postWedding') return 'postWedding';
+  const muhurtham = config.celebrations.find((event) => event.id === config.premium.muhurthamEventId);
+  if (!muhurtham) return now >= new Date(config.couple.date).getTime() ? 'postWedding' : 'upcoming';
+
+  const ceremonyStart = new Date(muhurtham.calendarStart).getTime();
+  const ceremonyEnd = new Date(muhurtham.calendarEnd).getTime();
+  const datePart = muhurtham.calendarStart.slice(0, 10);
+  const dayStart = new Date(datePart + 'T00:00:00+05:30').getTime();
+
+  if (now >= ceremonyEnd) return 'postWedding';
+  if (now >= ceremonyStart) return 'ceremonyLive';
+  if (now >= dayStart) return 'weddingDay';
+  return 'upcoming';
+}

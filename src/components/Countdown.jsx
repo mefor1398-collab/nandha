@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { dateParts, weddingMoment } from '../utils';
 
-export default function Countdown({ date }) {
+export default function Countdown({ date, stage, copy }) {
   const [parts, setParts] = useState(() => dateParts(date));
   const moment = weddingMoment(date);
 
@@ -11,12 +11,16 @@ export default function Countdown({ date }) {
     return () => window.clearInterval(timer);
   }, [date]);
 
-  if (moment === 'after') {
-    return <p className="countdown-message">The celebration lives on in every memory.</p>;
+  if (stage === 'ceremonyLive') {
+    return <p className="countdown-message">{copy.live}</p>;
+  }
+
+  if (stage === 'postWedding' || moment === 'after') {
+    return <p className="countdown-message">{copy.after}</p>;
   }
 
   if (moment === 'today') {
-    return <p className="countdown-message">The celebration is today. We cannot wait to welcome you.</p>;
+    return <p className="countdown-message">{copy.today}</p>;
   }
 
   const units = [

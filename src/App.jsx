@@ -5,7 +5,7 @@ import {
   MessageCircle, Phone, Share2, Sparkles, Utensils, Navigation,
 } from 'lucide-react';
 import { weddingConfig } from './data/wedding.config';
-import { scrollToId, weddingMoment } from './utils';
+import { scrollToId, weddingStage } from './utils';
 import Countdown from './components/Countdown';
 import SectionHeading from './components/SectionHeading';
 import EventCard from './components/EventCard';
@@ -15,6 +15,10 @@ import Gallery from './components/Gallery';
 import Guestbook from './components/Guestbook';
 import BlessingPicker from './components/BlessingPicker';
 import MusicToggle from './components/MusicToggle';
+import OpeningMoment from './components/OpeningMoment';
+import WeddingDayPanel from './components/WeddingDayPanel';
+import ShareCardButton from './components/ShareCardButton';
+import { premiumCopy } from './data/premium.copy';
 
 const petals = Array.from({ length: 13 }, (_, index) => index);
 const fireworkBursts = [
@@ -25,22 +29,39 @@ const fireworkBursts = [
   { x: '12%', y: '53%', delay: '2.6s', color: '#efa98e' },
 ];
 
-function formatHeroDate(date) {
-  return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
+function formatHeroDate(date, locale) {
+  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date));
+}
+
+function invitationUrl() {
+  const url = new URL(window.location.href);
+  url.search = '';
+  url.hash = '';
+  return url.toString();
 }
 
 export default function App() {
-  const config = weddingConfig;
   const prefersReducedMotion = useReducedMotion();
+  const config = weddingConfig;
+  const copy = premiumCopy;
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const [groomFirstName, ...groomLastNameParts] = config.couple.firstName.split(' ');
   const groomLastName = groomLastNameParts.join(' ');
   const [progress, setProgress] = useState(0);
-  const [shared, setShared] = useState(false);
+  const [heroFade, setHeroFade] = useState(0);
   const events = useMemo(() => config.celebrations.filter((event) => event.enabled), [config.celebrations]);
-  const isPostWedding = config.mode === 'postWedding' || currentTime >= new Date(config.couple.date).getTime();
-  const dateStatus = weddingMoment(config.couple.date);
+  const previewStage = new URLSearchParams(window.location.search).get('premium-preview');
+  const stage = ['weddingDay', 'ceremonyLive', 'postWedding'].includes(previewStage) ? previewStage : weddingStage(weddingConfig, currentTime);
+  const isPostWedding = stage === 'postWedding';
+  const isWeddingDay = stage === 'weddingDay' || stage === 'ceremonyLive';
+  const muhurtham = events.find((event) => event.id === config.premium.muhurthamEventId);
   const creatorWhatsAppUrl = 'https://wa.me/' + config.craftedBy.whatsappPhone + '?text=' + encodeURIComponent('Hello Muralee, I discovered the Nandha & Vani invitation and would love to create a beautiful digital invitation for my celebration.');
+  const shareCard = {
+    image: config.assets.hero,
+    ...config.premium.shareCard,
+    link: invitationUrl().replace(/^https?:\/\//, ''),
+    shareText: 'Join us to celebrate ' + config.couple.firstName + ' & ' + config.couple.secondName + '. ' + invitationUrl(),
+  };
 
   useEffect(() => {
     const timer = window.setInterval(() => setCurrentTime(Date.now()), 1000);
@@ -49,9 +70,14 @@ export default function App() {
 
   useEffect(() => {
     document.title = config.couple.firstName + ' & ' + config.couple.secondName + ' — The Celebration';
+    document.documentElement.lang = 'en';
+    document.documentElement.dir = 'ltr';
     const updateProgress = () => {
       const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(documentHeight > 0 ? (window.scrollY / documentHeight) * 100 : 0);
+      const fadeStart = window.innerHeight * 0.05;
+      const fadeDistance = window.innerHeight * 0.72;
+      setHeroFade(Math.min(1, Math.max(0, (window.scrollY - fadeStart) / fadeDistance)));
     };
     updateProgress();
     window.addEventListener('scroll', updateProgress, { passive: true });
@@ -61,22 +87,6 @@ export default function App() {
       window.removeEventListener('resize', updateProgress);
     };
   }, [config.couple.firstName, config.couple.secondName]);
-
-  async function shareInvitation() {
-    const data = {
-      title: config.couple.firstName + ' & ' + config.couple.secondName,
-      text: 'Join us to celebrate ' + config.couple.firstName + ' & ' + config.couple.secondName + '.',
-      url: window.location.href,
-    };
-    try {
-      if (navigator.share) await navigator.share(data);
-      else await navigator.clipboard.writeText(window.location.href);
-      setShared(true);
-      window.setTimeout(() => setShared(false), 2200);
-    } catch {
-      // A guest choosing to cancel the native share sheet needs no message.
-    }
-  }
 
   const themeStyle = {
     '--ink': config.theme.ink,
@@ -91,10 +101,11 @@ export default function App() {
   return (
     <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
     <div className="site-shell" style={themeStyle}>
+      <OpeningMoment config={config} copy={copy.ui.opening} reducedMotion={prefersReducedMotion} />
       <a className="skip-link" href="#main-content">Skip to invitation details</a>
       <div className="scroll-progress" style={{ transform: 'scaleX(' + progress / 100 + ')' }} aria-hidden="true" />
 
-      <section className="hero" aria-label="Wedding invitation">
+      <section className="hero" aria-label="Wedding invitation" style={{ opacity: 1 - heroFade }}>
         <div className="hero__image-wrap">
           <img src={config.assets.hero} alt="" className="hero__image" style={{ objectPosition: config.assets.heroPosition }} fetchPriority="high" />
           <div className="hero__image-overlay" />
@@ -141,22 +152,23 @@ export default function App() {
             <motion.p className="hero__line" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.8 }}>
               {isPostWedding ? config.postWedding.copy : config.couple.invitationLine}
             </motion.p>
-            {!isPostWedding && <motion.div className="hero__date" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.78, duration: 0.7 }}><span>{formatHeroDate(config.couple.date)}</span><i /> <span>{config.couple.location}</span></motion.div>}
-            {!isPostWedding && <motion.div className="hero__countdown" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.75 }}><Countdown date={config.couple.date} /></motion.div>}
+            {!isPostWedding && <motion.div className="hero__date" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.78, duration: 0.7 }}><span>{formatHeroDate(config.couple.date, copy.locale)}</span><i /> <span>{config.couple.location}</span></motion.div>}
+            {!isPostWedding && <motion.div className="hero__countdown" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.75 }}><Countdown date={config.couple.date} stage={stage} copy={copy.ui.countdown} /></motion.div>}
             <motion.button className="begin-button" type="button" onClick={() => scrollToId(isPostWedding ? 'gallery' : 'story')} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 0.75 }}>
-              {isPostWedding ? 'Revisit the moments' : 'Begin the celebration'} <ArrowDown size={16} aria-hidden="true" />
+              {isPostWedding ? copy.ui.hero.revisit : copy.ui.hero.begin} <ArrowDown size={16} aria-hidden="true" />
             </motion.button>
           </div>
         </div>
-        <p className="hero__date-status">{dateStatus === 'today' && !isPostWedding ? 'Today is the day' : ''}</p>
+        <p className="hero__date-status">{isWeddingDay ? copy.ui.hero.today : ''}</p>
       </section>
 
       <main id="main-content">
+        {isWeddingDay && muhurtham && <WeddingDayPanel state={stage} event={muhurtham} ui={copy.ui.dayPanel} />}
         {!isPostWedding && (
           <>
             <section className="story section section--ivory" id="story">
               <div className="container">
-                <SectionHeading eyebrow="A little story" title="Some things simply feel like home." copy={config.couple.cultureLine} />
+                <SectionHeading eyebrow={copy.ui.story.eyebrow} title={copy.ui.story.title} copy={config.couple.cultureLine} />
                 <div className="story-timeline">
                   {config.story.map((chapter, index) => (
                     <motion.article className={'story-card story-card--' + (index % 2 ? 'right' : 'left')} key={chapter.year} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7 }}>
@@ -173,38 +185,38 @@ export default function App() {
 
             <section className="celebrations section section--ink" id="celebrations">
               <div className="container">
-                <SectionHeading light eyebrow="Mark the moments" title="Come for a moment. Stay for the story." copy="Every gathering has its own mood, but all are made brighter by the people we love." />
+                <SectionHeading light eyebrow={copy.ui.celebrations.eyebrow} title={copy.ui.celebrations.title} copy={copy.ui.celebrations.copy} />
                 <div className="event-grid">
-                  {events.map((event, index) => <EventCard key={event.id} event={event} couple={config.couple} index={index} />)}
+                  {events.map((event, index) => <EventCard key={event.id} event={event} couple={config.couple} index={index} copy={copy.ui.event} />)}
                 </div>
               </div>
             </section>
 
             <section className="venue section section--sand" id="venue">
               <div className="container">
-                <SectionHeading eyebrow="A place to gather" title="By the sea, with everyone we love." copy={config.venue.arrivalNote} />
+                <SectionHeading eyebrow={copy.ui.venue.eyebrow} title={copy.ui.venue.title} copy={config.venue.arrivalNote} />
                 <div className="venue-grid">
                   <motion.div className="venue-map" initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.78, ease: [0.2, 0.7, 0.2, 1] }}>
                     <iframe title={'Map to ' + config.venue.name} loading="lazy" src={'https://www.google.com/maps?q=' + encodeURIComponent(config.venue.address) + '&output=embed'} />
-                    <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer" className="map-cta"><Navigation size={16} /> Open directions</a>
+                    <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer" className="map-cta"><Navigation size={16} /> {copy.ui.venue.map}</a>
                   </motion.div>
                   <motion.div className="venue-details" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.78, delay: 0.08, ease: [0.2, 0.7, 0.2, 1] }}>
-                    <p className="eyebrow">The venue</p>
+                    <p className="eyebrow">{copy.ui.venue.label}</p>
                     <h3>{config.venue.name}</h3>
                     <address>{config.venue.address}</address>
                     <div className="venue-actions">
-                      <a className="button button--dark" href={config.venue.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={16} /> Get directions</a>
-                      {config.venue.whatsappPhone && <a className="button button--outline" href={'https://wa.me/' + config.venue.whatsappPhone} target="_blank" rel="noreferrer"><MessageCircle size={16} /> WhatsApp help</a>}
+                      <a className="button button--dark" href={config.venue.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={16} /> {copy.ui.venue.getDirections}</a>
+                      {config.venue.whatsappPhone && <a className="button button--outline" href={'https://wa.me/' + config.venue.whatsappPhone} target="_blank" rel="noreferrer"><MessageCircle size={16} /> {copy.ui.venue.whatsapp}</a>}
                     </div>
                     <ul className="travel-list">
-                      <li><CarFront size={17} aria-hidden="true" /><span><strong>Parking</strong>{config.venue.parking}</span></li>
-                      <li><Heart size={17} aria-hidden="true" /><span><strong>Stay nearby</strong>{config.venue.accommodation}</span></li>
-                      <li><Navigation size={17} aria-hidden="true" /><span><strong>Getting there</strong>{config.venue.transport}</span></li>
+                      <li><CarFront size={17} aria-hidden="true" /><span><strong>{copy.ui.venue.parking}</strong>{config.venue.parking}</span></li>
+                      <li><Heart size={17} aria-hidden="true" /><span><strong>{copy.ui.venue.stayNearby}</strong>{config.venue.accommodation}</span></li>
+                      <li><Navigation size={17} aria-hidden="true" /><span><strong>{copy.ui.venue.gettingThere}</strong>{config.venue.transport}</span></li>
                     </ul>
                   </motion.div>
                 </div>
                 <motion.div className="faq-wrap" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} transition={{ duration: 0.75, ease: [0.2, 0.7, 0.2, 1] }}>
-                  <div><p className="eyebrow">A few helpful notes</p><h3>Everything you may be wondering.</h3><p>For anything else, please contact the family directly.</p>{config.venue.organiserPhone && <a href={'tel:' + config.venue.organiserPhone} className="text-button"><Phone size={15} /> Call the organiser</a>}</div>
+                  <div><p className="eyebrow">{copy.ui.venue.notesEyebrow}</p><h3>{copy.ui.venue.notesTitle}</h3><p>{copy.ui.venue.notesCopy}</p>{config.venue.organiserPhone && <a href={'tel:' + config.venue.organiserPhone} className="text-button"><Phone size={15} /> {copy.ui.venue.call}</a>}</div>
                   <Accordion items={config.faq} />
                 </motion.div>
               </div>
@@ -228,27 +240,27 @@ export default function App() {
 
         <section className="gallery section section--ivory" id="gallery">
           <div className="container">
-            <SectionHeading eyebrow={isPostWedding ? 'The celebration, remembered' : 'Frames of us'} title={isPostWedding ? 'All the moments we will keep.' : 'A collection of moments, waiting to grow.'} copy={isPostWedding ? 'The music, the laughter, the people we love—thank you for making it unforgettable.' : 'A few temporary frames for now. Soon, this will be filled with all the little moments from our journey.'} />
+            <SectionHeading eyebrow={isPostWedding ? copy.ui.gallery.afterEyebrow : copy.ui.gallery.upcomingEyebrow} title={isPostWedding ? copy.ui.gallery.afterTitle : copy.ui.gallery.upcomingTitle} copy={isPostWedding ? copy.ui.gallery.afterCopy : copy.ui.gallery.upcomingCopy} />
             <Gallery images={config.assets.gallery} />
           </div>
         </section>
 
         <section className="family section section--ink">
           <div className="container">
-            <SectionHeading light eyebrow="Family & blessings" title="Rooted in love, surrounded by grace." />
+            <SectionHeading light eyebrow={copy.ui.family.eyebrow} title={copy.ui.family.title} />
             <div className="family-grid">
               {[config.family.bride, config.family.groom].map((family, index) => <motion.article className="family-card" key={family.relation} initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }} viewport={{ once: true, amount: 0.28 }} transition={{ duration: 0.68, delay: index * 0.1, ease: [0.2, 0.7, 0.2, 1] }}><p>{family.heading}</p><h3>{family.relation}</h3>{family.names.map((name) => <span key={name}>{name}</span>)}</motion.article>)}
             </div>
-            <motion.blockquote className="blessing-quote" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.78, ease: [0.2, 0.7, 0.2, 1] }}><p>{config.family.quote.english}</p><span>{config.family.quote.native}</span><cite>{config.family.quote.attribution}</cite></motion.blockquote>
-            <BlessingPicker />
+            <motion.blockquote className="blessing-quote" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.78, ease: [0.2, 0.7, 0.2, 1] }}><p>{config.family.quote.english}</p>{config.family.quote.native && <span>{config.family.quote.native}</span>}<cite>{config.family.quote.attribution}</cite></motion.blockquote>
+            <BlessingPicker copy={copy.ui.blessingPicker} />
           </div>
         </section>
 
         {config.guestbook.enabled && (
           <section className="guestbook section section--sand" id="wishes">
             <div className="container guestbook-layout">
-              <motion.div initial={{ opacity: 0, x: -26 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.72, ease: [0.2, 0.7, 0.2, 1] }}><p className="eyebrow">A place for your blessings</p><h2>Send a wish they will treasure.</h2><p>Share a blessing, a memory, or a few words for the beautiful journey Nandha Kishore and Vani are beginning together.</p><div className="hashtag"><Share2 size={15} /><span>{config.guestbook.hashtag}</span><button type="button" onClick={shareInvitation}>{shared ? 'Link copied' : 'Share invitation'}</button></div></motion.div>
-              <Guestbook hashtag={config.guestbook.hashtag} />
+              <motion.div initial={{ opacity: 0, x: -26 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.72, ease: [0.2, 0.7, 0.2, 1] }}><p className="eyebrow">{copy.ui.wishes.eyebrow}</p><h2>{copy.ui.wishes.title}</h2><p>{copy.ui.wishes.copy}</p><div className="hashtag"><Share2 size={15} /><span>{config.guestbook.hashtag}</span><ShareCardButton card={shareCard} copy={copy.ui.share} /></div></motion.div>
+              <Guestbook hashtag={config.guestbook.hashtag} copy={copy.ui.guestbook} />
             </div>
           </section>
         )}
@@ -256,19 +268,19 @@ export default function App() {
 
       <motion.div className="floating-actions" aria-label="Quick actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.25, duration: 0.6 }}>
         {!isPostWedding && config.rsvp.enabled && <button type="button" onClick={() => scrollToId('rsvp')}><Heart size={17} /> <span>RSVP</span></button>}
-        {!isPostWedding && <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={17} /> <span>Directions</span></a>}
+        {!isPostWedding && <a href={config.venue.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={17} /> <span>{copy.ui.event.directions}</span></a>}
       </motion.div>
 
       <motion.footer className="footer" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}>
         <p>{config.couple.firstName} <span>&</span> {config.couple.secondName}</p>
-        <small>Made with care for the people who matter most.</small>
+        <small>{copy.ui.footer.madeWithCare}</small>
         <div className="footer-promo">
-          <span className="footer-promo__eyebrow">Your story deserves its own beautiful beginning</span>
-          <strong>Planning a celebration?</strong>
-          <p>Turn your special occasion into an elegant digital experience your guests will remember.</p>
-          <a href={creatorWhatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} aria-hidden="true" /> Click here to create your invitation</a>
+          <span className="footer-promo__eyebrow">{copy.ui.footer.promoEyebrow}</span>
+          <strong>{copy.ui.footer.promoTitle}</strong>
+          <p>{copy.ui.footer.promoCopy}</p>
+          <a href={creatorWhatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} aria-hidden="true" /> {copy.ui.footer.promoAction}</a>
         </div>
-        <small className="footer-credit">Crafted by <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
+        <small className="footer-credit">{copy.ui.footer.craftedBy} <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
         <nav className="footer-links" aria-label="Creator links">
           {config.craftedBy.links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ChevronRight size={13} aria-hidden="true" /></a>)}
         </nav>

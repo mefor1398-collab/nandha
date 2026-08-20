@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
 :root {
   font-family: 'DM Sans', Arial, sans-serif;
@@ -38,7 +38,41 @@ img { max-width: 100%; }
 .section-heading--light .section-copy { color: #3f5e52; }
 .section-heading--light .eyebrow { color: #7f3650; }
 
-.hero { min-height: 100svh; position: relative; isolation: isolate; color: #fffaf4; display: flex; flex-direction: column; }
+.wedding-day-panel { position: relative; margin-top: 16px; padding: 0 0 10px; overflow: hidden; color: #173a2e; }
+.wedding-day-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 86% 28%, rgba(167,124,62,.2), transparent 24%), linear-gradient(120deg, rgba(255,250,242,.95), rgba(219,232,221,.86)); border-top: 1px solid rgba(23,58,46,.13); border-bottom: 1px solid rgba(23,58,46,.13); }
+.wedding-day-panel__inner { position: relative; display: grid; gap: 24px; padding-top: 34px; padding-bottom: 34px; }
+.wedding-day-panel .eyebrow { margin-bottom: 9px; }
+.wedding-day-panel h2 { max-width: 510px; margin-bottom: 9px; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(32px, 7vw, 52px); font-weight: 500; line-height: .98; letter-spacing: -.045em; }
+.wedding-day-panel__inner > div > p:not(.eyebrow) { max-width: 520px; margin: 0; color: #47675a; font-size: 14px; line-height: 1.65; }
+.wedding-day-panel__details { display: grid; align-content: center; gap: 12px; padding: 19px; border: 1px solid rgba(23,58,46,.17); background: rgba(255,255,255,.36); box-shadow: inset 0 1px 0 rgba(255,255,255,.52); }
+.wedding-day-panel__details p { display: flex; align-items: flex-start; gap: 9px; margin: 0; color: #7f3650; }
+.wedding-day-panel__details span { display: grid; gap: 2px; color: #466357; font-size: 12px; line-height: 1.45; }
+.wedding-day-panel__details strong { color: #173a2e; font-family: Manrope, sans-serif; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.wedding-day-panel__details a { width: fit-content; display: inline-flex; align-items: center; gap: 7px; margin-top: 2px; padding: 10px 12px; border-radius: 50px; color: #fffaf4; background: #173a2e; font-family: Manrope, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-decoration: none; }
+
+.opening-moment { position: fixed; z-index: 200; inset: 0; display: grid; place-items: center; overflow: hidden; padding: 28px; border: 0; color: #fffaf4; background: #153c2f; cursor: pointer; text-align: center; animation: opening-arrive .45s ease-out both; }
+.opening-moment--leaving { pointer-events: none; animation: opening-leave .42s ease-in both; }
+.opening-moment__photo, .opening-moment__veil { position: absolute; inset: 0; }
+.opening-moment__photo { background-position: center 24%; background-size: cover; opacity: .35; filter: saturate(.82) contrast(1.04); transform: scale(1.06); animation: opening-photo 1.8s ease-out both; }
+.opening-moment__veil { background: radial-gradient(circle at 50% 38%, rgba(239,204,158,.22), transparent 22%), linear-gradient(180deg, rgba(9,43,32,.6), rgba(10,43,32,.91)); }
+.opening-moment__content { position: relative; width: min(100%, 360px); display: grid; justify-items: center; }
+.opening-moment__ring { width: 114px; height: 114px; position: relative; display: grid; place-items: center; margin-bottom: -75px; border: 1px solid rgba(245,216,180,.75); border-radius: 50%; box-shadow: 0 0 0 10px rgba(245,216,180,.08), 0 0 48px rgba(246,211,162,.18); animation: opening-ring 1.25s cubic-bezier(.2,.7,.2,1) both; }
+.opening-moment__ring i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #f4d7b2; box-shadow: 0 0 11px #f4d7b2; }
+.opening-moment__ring i:nth-child(1) { top: 7px; left: 50%; }
+.opening-moment__ring i:nth-child(2) { right: 11px; bottom: 21px; }
+.opening-moment__ring i:nth-child(3) { bottom: 15px; left: 19px; }
+.opening-moment strong { position: relative; z-index: 1; margin-bottom: 82px; color: #fff5e7; font-family: 'Playfair Display', Georgia, serif; font-size: 35px; font-weight: 500; letter-spacing: -.08em; animation: opening-mark .85s .12s both; }
+.opening-moment__names { color: #fffaf2; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(27px, 7vw, 35px); font-weight: 500; letter-spacing: -.05em; animation: opening-copy .7s .34s both; }
+.opening-moment__names em { margin: 0 2px; color: #f1b9c5; font-style: italic; }
+.opening-moment small { margin-top: 25px; color: rgba(255,250,242,.72); font-family: Manrope, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; animation: opening-copy .7s .58s both; }
+.opening-moment__enter { margin-top: 60px; color: #f4d7b2; font-family: Manrope, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; animation: opening-copy .7s .74s both, opening-pulse 1.8s 1.2s ease-in-out infinite; }
+
+.share-card-button { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 8px 11px; border: 1px solid rgba(127,54,80,.3); border-radius: 50px; color: #7f3650; background: rgba(255,255,255,.42); font-family: Manrope, sans-serif; font-size: 10px; font-weight: 700; text-align: left; transition: transform .2s, background .2s, border-color .2s; }
+.share-card-button:hover:not(:disabled) { border-color: #7f3650; background: rgba(255,255,255,.75); transform: translateY(-1px); }
+.share-card-button:disabled { opacity: .62; cursor: wait; }
+.hashtag .share-card-button { border-bottom: 1px solid rgba(127,54,80,.3); }
+
+.hero { min-height: 100svh; position: sticky; z-index: 0; top: 0; isolation: isolate; color: #fffaf4; display: flex; flex-direction: column; will-change: opacity; }
 .hero__image-wrap, .hero__image, .hero__image-overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero__image-wrap { animation: image-reveal 1.25s ease-out both; }
 .hero__image { object-fit: cover; object-position: 57% center; z-index: -2; animation: hero-breathe 13s ease-in-out infinite alternate; }
@@ -71,6 +105,8 @@ img { max-width: 100%; }
 .hero__petals { position: absolute; inset: 0; overflow: hidden; z-index: 1; pointer-events: none; }
 .petal { position: absolute; top: -8%; left: calc((var(--petal-index) * 8) * 1%); width: 8px; height: 13px; opacity: .55; border-radius: 80% 0 80% 0; background: #f2d2cb; animation: petal-drift calc(11s + var(--petal-index) * .7s) linear infinite; animation-delay: calc(var(--petal-index) * -1.2s); }
 .petal--1 { background: #ecd7c1; } .petal--2 { width: 5px; height: 9px; opacity: .32; } .petal--3 { background: #f9e5e4; } .petal--4 { opacity: .2; }
+main, .footer { position: relative; z-index: 2; }
+main { background: var(--ivory); box-shadow: 0 -22px 48px rgba(10,38,28,.12); }
 .fireworks { position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
 .firework { position: absolute; top: var(--y); left: var(--x); width: 4px; height: 4px; }
 .firework::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; background: var(--firework-color); box-shadow: 0 0 18px var(--firework-color); opacity: 0; animation: firework-core 3.3s ease-out infinite; animation-delay: var(--delay); }
@@ -102,7 +138,6 @@ img { max-width: 100%; }
 .event-card:nth-child(even) { background: radial-gradient(circle at 92% 7%, rgba(167,124,62,.14), transparent 25%), linear-gradient(145deg, #d3dfd5, #b8ccbc); }
 .event-card:hover { transform: translateY(-4px); box-shadow: inset 0 1px 0 rgba(255,255,255,.62), 0 24px 46px rgba(32,64,52,.2); }
 .event-card > * { position: relative; z-index: 1; }
-.event-card__index { position: absolute; top: 13px; right: 21px; color: rgba(23,58,46,.13); font-family: 'Playfair Display', serif; font-size: 56px; }
 .event-card__topline { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: Manrope, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .event-card__topline p { margin: 0; color: #7f3650; }
 .event-card__topline span { padding: 6px 9px; border: 1px solid rgba(79,104,91,.3); border-radius: 20px; color: #284b3e; background: rgba(255,255,255,.28); letter-spacing: .05em; }
@@ -274,6 +309,13 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 @keyframes monogram-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(232,184,194,0), inset 0 0 14px rgba(232,184,194,.05); color: #fffaf4; } 50% { box-shadow: 0 0 18px 2px rgba(232,184,194,.35), inset 0 0 16px rgba(167,124,62,.2); color: #ffe5ac; } }
 @keyframes heart-beat { 0%, 100% { transform: scale(.78) rotate(-12deg); opacity: .7; } 45% { transform: scale(1.08) rotate(4deg); opacity: 1; } 65% { transform: scale(.88) rotate(-4deg); opacity: .84; } }
 @keyframes heart-breathe { 0%, 100% { transform: scale(.96); } 45% { transform: scale(1.06); } 65% { transform: scale(.99); } }
+@keyframes opening-arrive { from { opacity: 0; } to { opacity: 1; } }
+@keyframes opening-leave { from { opacity: 1; visibility: visible; } to { opacity: 0; visibility: hidden; } }
+@keyframes opening-photo { from { opacity: 0; transform: scale(1.15); } to { opacity: .35; transform: scale(1.06); } }
+@keyframes opening-ring { from { opacity: 0; transform: scale(.55) rotate(-20deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+@keyframes opening-mark { from { opacity: 0; transform: translateY(9px) scale(.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes opening-copy { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes opening-pulse { 0%, 100% { opacity: .66; } 50% { opacity: 1; } }
 
 @media (max-width: 779px) {
   .hero { min-height: 0; background: var(--ink); }
@@ -317,13 +359,40 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 
 @media (min-width: 780px) {
   .section { padding: 118px 0; }
+  .wedding-day-panel__inner { grid-template-columns: 1.1fr .9fr; align-items: center; gap: 70px; }
+  .hero__image-wrap { z-index: -2; }
+  .hero__image-overlay {
+    background:
+      linear-gradient(90deg, rgba(12, 45, 34, .94) 0%, rgba(15, 51, 39, .82) 31%, rgba(18, 48, 37, .46) 58%, rgba(18, 39, 31, .12) 100%),
+      linear-gradient(0deg, rgba(10, 38, 28, .42), transparent 48%);
+  }
+  .hero__nav,
+  .hero__content { position: relative; z-index: 2; }
   .hero__nav nav { display: flex; }
   .hero__image { object-position: 58% center; }
-  .hero__content { padding-bottom: 78px; }
-  .hero h1 { line-height: .78; }
-  .hero h1 span { display: inline; }
-  .hero h1 .hero__groom-first::after { content: ' '; white-space: pre; }
-  .hero h1 em { display: inline; margin: 0 6px; }
+  .hero__content {
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 66px;
+  }
+  .hero__identity,
+  .hero__details { width: min(45vw, 470px); }
+  .hero h1 {
+    max-width: 470px;
+    margin-bottom: 17px;
+    font-size: clamp(64px, 6.1vw, 88px);
+    letter-spacing: -.065em;
+    line-height: .79;
+    text-shadow: 0 3px 24px rgba(5, 28, 20, .28);
+  }
+  .hero h1 .hero__groom-name,
+  .hero h1 .hero__groom-first,
+  .hero h1 .hero__groom-last { display: block; }
+  .hero h1 .hero__groom-last { margin-left: .22em; }
+  .hero h1 em,
+  .hero h1 .hero__bride-name { display: inline; }
+  .hero h1 em { margin: 0 .12em 0 .36em; }
+  .hero__line { max-width: 420px; }
   .story-timeline::before { left: 50%; }
   .story-card { width: 50%; display: block; padding: 0 35px 54px 0; }
   .story-card--right { margin-left: 50%; padding: 0 0 54px 35px; }
@@ -343,7 +412,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 
 @media (min-width: 1060px) {
   .hero__nav { min-height: 90px; }
-  .hero__content { padding-bottom: 95px; }
+  .hero__content { padding-bottom: 74px; }
   .event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .event-card { min-height: 465px; }
   .event-card__actions { flex-wrap: wrap; }

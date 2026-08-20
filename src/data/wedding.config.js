@@ -6,6 +6,19 @@
  */
 export const weddingConfig = {
   mode: 'upcoming',
+  premium: {
+    timezone: 'Asia/Kolkata',
+    openingStorageKey: 'nandha-vani-premium-opening-v1',
+    openingDuration: 1450,
+    muhurthamEventId: 'muhurtam',
+    shareCard: {
+      englishNames: 'Nandha Kishore & Vani',
+      tamilNames: 'நந்த கிஷோர் & வாணி',
+      date: '31 August 2026  •  31 ஆகஸ்ட் 2026',
+      englishVenue: 'Sri Gopikrishna Mahal, Kumpinipet',
+      tamilVenue: 'ஸ்ரீ கோபிகிருஷ்ணா மஹால, கும்பினிப்பேட்டை',
+    },
+  },
   couple: {
     firstName: 'Nandha Kishore',
     secondName: 'Vani',
@@ -68,7 +81,7 @@ export const weddingConfig = {
     { question: 'Can I send a blessing?', answer: 'Yes. Use the Send wishes section below to share a private message for Nandha Kishore and Vani.' },
   ],
   family: {
-    bride: { heading: 'With love from', relation: 'Vani’s family', names: ['Mrs. S. Dass Naidu & Mrs. D. Chitra'] },
+    bride: { heading: 'With love from', relation: 'Vani’s family', names: ['Mr. S. Dass Naidu & Mrs. D. Chitra'] },
     groom: { heading: 'And blessings from', relation: 'Nandha Kishore’s family', names: ['Mr. E. O. Subramanyam & Mrs. E. S. Dayavathi'] },
     quote: { english: '“May this union be blessed with love, harmony, and a lifetime of joy.”', native: 'இறையருளால் இணையும் இதயங்கள் என்றும் இன்பமாய் வாழ்க.', attribution: '— With the blessings of both families' },
   },

@@ -1,0 +1,32 @@
+export const premiumCopy = {
+  locale: 'en-IN',
+  ui: {
+    event: { time: 'Time', venue: 'Venue', addToCalendar: 'Add to calendar', directions: 'Directions' },
+    dayPanel: {
+      dayEyebrow: 'The celebration is today',
+      dayTitle: 'A beautiful day begins.',
+      dayCopy: 'The families look forward to welcoming you for the Muhurtam.',
+      liveEyebrow: 'The sacred ceremony is underway',
+      liveTitle: 'A moment made for forever.',
+      liveCopy: 'Thank you for holding Nandha Kishore and Vani in your blessings.',
+      nextMoment: 'Muhurtham',
+      venue: 'Venue',
+      directions: 'Open directions',
+    },
+    opening: { enter: 'Tap to enter', celebration: 'A celebration of love' },
+    share: { create: 'Create bilingual invitation card', creating: 'Preparing your card…', download: 'Download invitation card', ready: 'Your card is ready to share', fallback: 'Invitation card downloaded' },
+    story: { eyebrow: 'A little story', title: 'Some things simply feel like home.' },
+    celebrations: { eyebrow: 'Mark the moments', title: 'Come for a moment. Stay for the story.', copy: 'Every gathering has its own mood, but all are made brighter by the people we love.' },
+    venue: { eyebrow: 'A place to gather', title: 'By the sea, with everyone we love.', map: 'Open directions', label: 'The venue', getDirections: 'Get directions', whatsapp: 'WhatsApp help', parking: 'Parking', stayNearby: 'Stay nearby', gettingThere: 'Getting there', notesEyebrow: 'A few helpful notes', notesTitle: 'Everything you may be wondering.', notesCopy: 'For anything else, please contact the family directly.', call: 'Call the organiser' },
+    gallery: { upcomingEyebrow: 'Frames of us', upcomingTitle: 'A collection of moments, waiting to grow.', upcomingCopy: 'A few temporary frames for now. Soon, this will be filled with all the little moments from our journey.', afterEyebrow: 'The celebration, remembered', afterTitle: 'All the moments we will keep.', afterCopy: 'The music, the laughter, the people we love—thank you for making it unforgettable.' },
+    family: { eyebrow: 'Family & blessings', title: 'Rooted in love, surrounded by grace.', attribution: '— With the blessings of both families' },
+    blessingPicker: { eyebrow: 'Leave a quiet blessing', prompt: 'Choose a word for the journey ahead.', options: [{ label: 'Love', message: 'May your home always be the softest place to land.' }, { label: 'Joy', message: 'May ordinary days give you reasons to celebrate.' }, { label: 'Prosperity', message: 'May every shared dream find its season to bloom.' }, { label: 'Togetherness', message: 'May every road ahead feel lighter, side by side.' }] },
+    wishes: { eyebrow: 'A place for your blessings', title: 'Send a wish they will treasure.', copy: 'Share a blessing, a memory, or a few words for the beautiful journey Nandha Kishore and Vani are beginning together.', shareLink: 'Share invitation' },
+    guestbook: {
+      heading: 'For the happy couple', name: 'Your name', namePlaceholder: 'How should we sign your blessing?', relation: 'Your family or relationship', optional: '(optional)', relationPlaceholder: 'e.g. Family friend, colleague, cousin', choices: 'Choose a blessing to send', blessings: ['Love & togetherness', 'Joy & laughter', 'Prosperity & grace'], message: 'Your message', messagePlaceholder: 'Write a blessing from the heart…', sending: 'Sending…', submit: 'Send your blessing', privacy: 'Your wish is private and will be shared only with the couple.', thanks: 'Thank you. Your blessing is now part of a keepsake for Nandha Kishore and Vani.',
+    },
+    footer: { madeWithCare: 'Made with care for the people who matter most.', promoEyebrow: 'Your story deserves its own beautiful beginning', promoTitle: 'Planning a celebration?', promoCopy: 'Turn your special occasion into an elegant digital experience your guests will remember.', promoAction: 'Click here to create your invitation', craftedBy: 'Crafted by' },
+    hero: { begin: 'Begin the celebration', revisit: 'Revisit the moments', today: 'Today is the day' },
+    countdown: { live: 'The sacred ceremony is underway.', after: 'The celebration lives on in every memory.', today: 'The celebration is today. We cannot wait to welcome you.' },
+  },
+};
