@@ -266,7 +266,7 @@ export default function App() {
           <span className="footer-promo__eyebrow">Your story deserves its own beautiful beginning</span>
           <strong>Planning a celebration?</strong>
           <p>Turn your special occasion into an elegant digital experience your guests will remember.</p>
-          <a href={creatorWhatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} aria-hidden="true" /> Create your invitation</a>
+          <a href={creatorWhatsAppUrl} target="_blank" rel="noreferrer"><MessageCircle size={17} aria-hidden="true" /> Click here to create your invitation</a>
         </div>
         <small className="footer-credit">Crafted by <strong>{config.craftedBy.name}</strong> <span>— {config.craftedBy.role}</span></small>
         <nav className="footer-links" aria-label="Creator links">
