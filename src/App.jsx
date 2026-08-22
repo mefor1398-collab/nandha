@@ -18,6 +18,7 @@ import MusicToggle from './components/MusicToggle';
 import OpeningMoment from './components/OpeningMoment';
 import WeddingDayPanel from './components/WeddingDayPanel';
 import ShareCardButton from './components/ShareCardButton';
+import CatchBlessings from './components/CatchBlessings';
 import { premiumCopy } from './data/premium.copy';
 
 const petals = Array.from({ length: 13 }, (_, index) => index);
@@ -244,6 +245,8 @@ export default function App() {
             <Gallery images={config.assets.gallery} />
           </div>
         </section>
+
+        <CatchBlessings copy={copy.ui.game} creatorUrl={creatorWhatsAppUrl} onSendWish={() => scrollToId('wishes')} reducedMotion={prefersReducedMotion} />
 
         <section className="family section section--ink">
           <div className="container">

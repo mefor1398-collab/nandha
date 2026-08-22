@@ -27,6 +27,7 @@ img { max-width: 100%; }
 
 .skip-link { position: fixed; top: 10px; left: 10px; z-index: 100; padding: 10px 14px; background: white; color: var(--ink); transform: translateY(-150%); transition: transform .2s; }
 .skip-link:focus { transform: translateY(0); }
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 .scroll-progress { position: fixed; z-index: 90; inset: 0 auto auto 0; width: 100%; height: 3px; background: var(--rose); transform-origin: 0 50%; transition: transform .12s linear; }
 
 .eyebrow { margin: 0 0 13px; color: var(--rose); font-family: Manrope, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .18em; line-height: 1.3; text-transform: uppercase; }
@@ -235,6 +236,57 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 .lightbox__nav { top: 50%; transform: translateY(-50%); }
 .lightbox__nav--previous { left: 8px; } .lightbox__nav--next { right: 8px; }
 
+.blessing-game { overflow: hidden; background: radial-gradient(circle at 5% 15%, rgba(167,124,62,.14), transparent 25%), linear-gradient(145deg, #dce6dd, #c4d4c7); }
+.blessing-game::before, .blessing-game::after { content: ''; position: absolute; border: 1px solid rgba(127,54,80,.13); border-radius: 50%; pointer-events: none; }
+.blessing-game::before { width: 210px; height: 210px; top: -115px; right: -90px; box-shadow: 0 0 0 28px rgba(255,255,255,.08); }
+.blessing-game::after { width: 140px; height: 140px; bottom: -80px; left: -68px; box-shadow: 0 0 0 22px rgba(167,124,62,.05); }
+.blessing-game__layout { position: relative; z-index: 1; display: grid; gap: 35px; }
+.blessing-game__intro { max-width: 510px; }
+.blessing-game__intro h2 { max-width: 440px; margin-bottom: 17px; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(42px, 10vw, 66px); font-weight: 500; letter-spacing: -.05em; line-height: .94; }
+.blessing-game__intro > p:not(.eyebrow) { max-width: 460px; margin-bottom: 25px; color: #456357; font-size: 14px; line-height: 1.7; }
+.blessing-game__legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.blessing-game__legend > span { min-height: 37px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid rgba(23,58,46,.16); border-radius: 30px; color: #355548; background: rgba(255,255,255,.3); font-family: Manrope, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+.blessing-game__symbol { width: 20px; height: 20px; display: grid; place-items: center; font-family: Georgia, serif; font-size: 21px; font-style: normal; line-height: 1; }
+.blessing-game__symbol--flower { color: #a14361; }
+.blessing-game__symbol--gold { color: #a77c3e; }
+.blessing-game__symbol--leaf { color: #527765; }
+.blessing-game__card { width: 100%; max-width: 680px; overflow: hidden; border: 1px solid rgba(23,58,46,.22); border-radius: 18px; background: #173f32; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 22px 48px rgba(28,62,50,.2); }
+.blessing-game__status { min-height: 58px; display: grid; grid-template-columns: 1fr 1fr auto; align-items: center; gap: 8px; padding: 8px 12px 8px 16px; color: rgba(255,250,244,.7); background: linear-gradient(120deg, #214f3f, #173c30); font-family: Manrope, sans-serif; }
+.blessing-game__status > span { display: grid; gap: 1px; font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.blessing-game__status strong { color: #fffaf4; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 500; letter-spacing: 0; line-height: 1; }
+.blessing-game__pause { min-height: 35px; display: inline-flex; align-items: center; gap: 5px; padding: 7px 9px; border: 1px solid rgba(255,255,255,.24); border-radius: 30px; color: #fffaf4; background: rgba(255,255,255,.08); font-size: 9px; font-weight: 700; }
+.blessing-game__arena { --arena-travel: 455px; height: 390px; position: relative; overflow: hidden; isolation: isolate; background: radial-gradient(circle at 50% 18%, rgba(255,255,255,.78), transparent 31%), linear-gradient(180deg, #f7f1e7, #e7ded0); }
+.blessing-game__arena::before { content: ''; position: absolute; inset: 0; opacity: .32; background-image: radial-gradient(circle at 16% 75%, rgba(127,54,80,.2) 0 1px, transparent 2px), radial-gradient(circle at 78% 24%, rgba(167,124,62,.25) 0 1px, transparent 2px); background-size: 37px 37px, 43px 43px; pointer-events: none; }
+.blessing-game__welcome, .blessing-game__result, .blessing-game__paused { position: absolute; z-index: 4; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; text-align: center; }
+.blessing-game__welcome-mark { width: 66px; height: 66px; position: relative; display: grid; place-items: center; margin-bottom: 19px; border: 1px solid rgba(127,54,80,.23); border-radius: 50%; color: #8a2040; background: rgba(255,255,255,.42); box-shadow: 0 0 0 9px rgba(127,54,80,.045); }
+.blessing-game__welcome-mark svg:last-child { position: absolute; top: -4px; right: -3px; color: #a77c3e; }
+.blessing-game__welcome h3, .blessing-game__result h3 { max-width: 390px; margin-bottom: 10px; color: #173a2e; font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 500; letter-spacing: -.04em; line-height: 1.05; }
+.blessing-game__welcome p { max-width: 340px; margin-bottom: 21px; color: #536c61; font-size: 12px; line-height: 1.6; }
+.blessing-game__target { width: 52px; height: 52px; position: absolute; z-index: 2; top: -64px; left: var(--target-x); display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #9b3d5b; background: rgba(255,255,255,.78); box-shadow: 0 7px 18px rgba(70,57,44,.16); transform: translateX(-50%); animation: blessing-fall var(--target-duration) linear var(--target-delay) both; touch-action: manipulation; }
+.blessing-game__target span { display: block; font-family: Georgia, serif; font-size: 34px; line-height: 1; }
+.blessing-game__target--gold { color: #a8792e; background: #fff5d6; box-shadow: 0 0 0 5px rgba(212,171,88,.12), 0 8px 20px rgba(96,72,35,.2); }
+.blessing-game__target--gold span { animation: blessing-glow 1.2s ease-in-out infinite; }
+.blessing-game__target--leaf { color: #557b68; background: rgba(225,237,225,.9); }
+.blessing-game__target--leaf span { font-size: 35px; transform: rotate(-24deg); }
+.blessing-game__target:hover, .blessing-game__target:focus-visible { outline: 2px solid #8a2040; outline-offset: 2px; }
+.blessing-game__target:disabled { cursor: default; }
+.blessing-game__target.is-caught { visibility: hidden; pointer-events: none; animation-play-state: paused; }
+.blessing-game__card--paused .blessing-game__target { animation-play-state: paused; }
+.blessing-game__paused { color: #173a2e; background: rgba(248,245,237,.88); backdrop-filter: blur(3px); }
+.blessing-game__paused strong { margin: 9px 0 4px; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 500; }
+.blessing-game__paused span { color: #536c61; font-size: 11px; }
+.blessing-game__result { background: radial-gradient(circle at 50% 18%, rgba(255,255,255,.9), transparent 30%), linear-gradient(155deg, rgba(248,245,237,.97), rgba(231,222,208,.98)); }
+.blessing-game__result-mark { margin-bottom: 8px; color: #9b3d5b; font-family: Georgia, serif; font-size: 44px; line-height: 1; }
+.blessing-game__result .eyebrow { margin-bottom: 9px; }
+.blessing-game__result > p:not(.eyebrow) { max-width: 365px; margin-bottom: 11px; color: #536c61; font-size: 12px; line-height: 1.55; }
+.blessing-game__result > strong { color: #7f3650; font-size: 11px; letter-spacing: .05em; }
+.blessing-game__result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0 17px; }
+.blessing-game__result small { color: #6b756f; font-size: 9px; line-height: 1.5; }
+.blessing-game__result small a { color: #7f3650; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.blessing-game__arena--still { display: grid; grid-template-columns: repeat(4, 1fr); align-content: center; gap: 10px 4px; padding: 20px 13px; }
+.blessing-game__arena--still .blessing-game__target { position: relative; inset: auto; justify-self: center; transform: none; animation: none; }
+.blessing-game__arena--still .blessing-game__target--gold span { animation: none; }
+
 .family { background-image: radial-gradient(circle at 80% 20%, rgba(183,111,118,.13), transparent 23%); }
 .family-grid { display: grid; gap: 10px; }
 .family-card { min-height: 185px; padding: 28px 23px; border: 1px solid rgba(23,58,46,.2); background: radial-gradient(circle at 92% 7%, rgba(151,75,101,.13), transparent 25%), linear-gradient(145deg, #d8e2d9, #bfd0c2); text-align: center; transition: transform .45s cubic-bezier(.2,.7,.2,1), border-color .35s, background .35s; }
@@ -307,6 +359,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 @keyframes image-reveal { from { opacity: .35; } to { opacity: 1; } }
 @keyframes promo-shimmer { 0%, 58%, 100% { transform: translateX(-120%); } 76% { transform: translateX(120%); } }
 @keyframes promo-orbit { 0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: .7; } 50% { transform: translate3d(-8px,-8px,0) scale(1.08); opacity: 1; } }
+@keyframes blessing-fall { 0% { opacity: 0; transform: translate3d(-50%, -20px, 0) rotate(0deg); } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; transform: translate3d(calc(-50% + var(--target-drift)), var(--arena-travel), 0) rotate(var(--target-rotation)); } }
+@keyframes blessing-glow { 0%, 100% { transform: scale(.92) rotate(-5deg); } 50% { transform: scale(1.08) rotate(5deg); } }
 @keyframes monogram-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(232,184,194,0), inset 0 0 14px rgba(232,184,194,.05); color: #fffaf4; } 50% { box-shadow: 0 0 18px 2px rgba(232,184,194,.35), inset 0 0 16px rgba(167,124,62,.2); color: #ffe5ac; } }
 @keyframes heart-beat { 0%, 100% { transform: scale(.78) rotate(-12deg); opacity: .7; } 45% { transform: scale(1.08) rotate(4deg); opacity: 1; } 65% { transform: scale(.88) rotate(-4deg); opacity: .84; } }
 @keyframes heart-breathe { 0%, 100% { transform: scale(.96); } 45% { transform: scale(1.06); } 65% { transform: scale(.99); } }
@@ -365,6 +419,9 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); box-shado
 @media (min-width: 780px) {
   .section { padding: 118px 0; }
   .wedding-day-panel__inner { grid-template-columns: 1.1fr .9fr; align-items: center; gap: 70px; }
+  .blessing-game__layout { grid-template-columns: .72fr 1.28fr; align-items: center; gap: 72px; }
+  .blessing-game__card { justify-self: end; }
+  .blessing-game__arena { --arena-travel: 500px; height: 430px; }
   .hero__image-wrap { z-index: -2; }
   .hero__image-overlay {
     background:
